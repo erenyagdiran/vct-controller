@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import base64
 
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.poolmanager import PoolManager
+from urllib3.poolmanager import PoolManager
 
 
 class SSLAdapter(HTTPAdapter):
