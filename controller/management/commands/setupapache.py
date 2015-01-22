@@ -59,6 +59,7 @@ class Command(BaseCommand):
             'WSGIScriptAlias / %(project_root)s/wsgi.py\n'
             'WSGIPassAuthorization On\n\n'
             '<Directory %(project_root)s>\n'
+            '    Require all granted\n'
             '    <Files wsgi.py>\n'
             '        Order deny,allow\n'
             '        Allow from all\n'
@@ -67,6 +68,7 @@ class Command(BaseCommand):
             'Alias /media/ %(media_root)s/\n'
             'Alias /static/ %(static_root)s/\n'
             '<Directory %(static_root)s>\n'
+            '    Require all granted\n'
             '    ExpiresActive On\n'
             '    ExpiresByType image/gif A1209600\n'
             '    ExpiresByType image/jpeg A1209600\n'
@@ -91,7 +93,7 @@ class Command(BaseCommand):
         
         context.update({
             'apache_conf': apache_conf,
-            'apache_conf_file': '/etc/apache2/conf.d/%(project_name)s.conf' % context})
+            'apache_conf_file': '/etc/apache2/sites-enabled/%(project_name)s.conf' % context})
         
         diff = run("echo '%(apache_conf)s'|diff - %(apache_conf_file)s" % context, err_codes=[0,1,2])
         if diff.return_code == 2:
